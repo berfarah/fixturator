@@ -7,7 +7,7 @@ ActiveRecord::Base
 **QUIRKS**
 
 I've made `created_at` and `updated_at` always output the same time. The reason
-this is part of this gem is that the git diff for these gets really messy.
+this is part of the gem is that git diffs get really messy otherwise.
 
 ## Usage
 
@@ -16,36 +16,20 @@ but you can also call it yourself with a model.
 
 #### Rake task
 
-```
+This gem ships with a rake task that has a few flags you can use with it
+
+```sh
 bin/rake db:fixtures:generate
-```
 
-You can pass in the following flags when using the rake task:
-
-**ONLY**
-
-If you want to narrow the scope of the task to just a few models
-
-```
+# If you want to narrow the scope of the task to just a few models
 ONLY=User,Post bin/rake db:fixtures:generate
-```
 
-**SKIP**
-
-Models that you don't want to generate fixtures for
-
-```
+# If you have models that you don't want to generate fixtures for
 SKIP=DelayedJob,SecretStuff bin/rake db:fixtures:generate
-```
 
-**EXCLUDE_ATTRS**
-
-Attributes you would like to keep out of the fixtures
-
-```
+# If there are attributes you would like to keep out of the fixtures
 EXCLUDE_ATTRS=password,sensitive_information bin/rake db:fixtures:generate
 ```
-
 
 #### Ruby interface
 
