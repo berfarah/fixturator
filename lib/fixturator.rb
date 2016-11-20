@@ -1,3 +1,4 @@
+require "fixturator/railtie"
 require "fixturator/locator"
 require "fixturator/generator"
 
