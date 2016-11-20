@@ -9,6 +9,7 @@ class FixturatorGenerateFixturesTest < ActiveSupport::TestCase
   describe "rake task" do
     before do
       Dummy::Application.load_tasks
+      FileUtils.mkdir_p(Rails.root.join("test", "fixtures"))
     end
 
     it "succeeds" do
