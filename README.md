@@ -1,8 +1,62 @@
 # Fixturator
-Short description and motivation.
+
+Fixturator is a Rails plugin that generates fixtures from your ActiveRecord
+models. By default, it looks for anything that has subclassed
+ActiveRecord::Base
+
+**QUIRKS**
+
+I've made `created_at` and `updated_at` always output the same time. The reason
+this is part of this gem is that the git diff for these gets really messy.
 
 ## Usage
-How to use my plugin.
+
+There are two ways to use Fixturator. There's a rake task that it comes with,
+but you can also call it yourself with a model.
+
+#### Rake task
+
+```
+bin/rake db:fixtures:generate
+```
+
+You can pass in the following flags when using the rake task:
+
+**ONLY**
+
+If you want to narrow the scope of the task to just a few models
+
+```
+ONLY=User,Post bin/rake db:fixtures:generate
+```
+
+**SKIP**
+
+Models that you don't want to generate fixtures for
+
+```
+SKIP=DelayedJob,SecretStuff bin/rake db:fixtures:generate
+```
+
+**EXCLUDE_ATTRS**
+
+Attributes you would like to keep out of the fixtures
+
+```
+EXCLUDE_ATTRS=password,sensitive_information bin/rake db:fixtures:generate
+```
+
+
+#### Ruby interface
+
+```rb
+Fixturator.call(User, exclude_attributes: ["created_at"])
+
+# generates a User fixture at your configured fixture directory
+# by default it's at test/fixtures/users.yml
+```
+
+
 
 ## Installation
 Add this line to your application's Gemfile:
@@ -22,7 +76,8 @@ $ gem install fixturator
 ```
 
 ## Contributing
-Contribution directions go here.
+Please submit specific issue reports if you see this working in a way you
+wouldn't expect. PRs and discussion is welcomed and appreciated!
 
 ## License
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
