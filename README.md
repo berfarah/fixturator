@@ -1,13 +1,15 @@
 # Fixturator
 
 Fixturator is a Rails plugin that generates fixtures from your ActiveRecord
-models. By default, it looks for anything that has subclassed
-ActiveRecord::Base
+models. It requires you to whitelist models in your `config/fixturator.yml`
 
 **QUIRKS**
 
 I've made `created_at` and `updated_at` always output the same time. The reason
 this is part of the gem is that git diffs get really messy otherwise.
+
+You can also exclude timestamps entirely by using the `exclude_timestamps`
+setting
 
 ## Usage
 
@@ -26,21 +28,14 @@ bin/rake db:fixtures:generate
 Here's an example configuration:
 
 ```yml
-excluded_models:
-- Secret
-- DelayedJob
+exclude_timestamps: false
 
-included_models:
-- User
-
-excluded_attributes:
-- secret_attribute
-- ssn
-
-model_level_excluded_attributes:
-  User:
-  - middle_name
-  - drivers_license
+models:
+  - name: Driver
+  - name: User
+    exclude:
+      - secret_attribute
+      - ssn
 ```
 
 

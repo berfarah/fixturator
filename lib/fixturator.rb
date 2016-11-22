@@ -1,21 +1,16 @@
 require "fixturator/railtie"
 require "fixturator/configuration"
-require "fixturator/locator"
 require "fixturator/generator"
 
 module Fixturator
   class << self
     def generate!
-      config = Configuration.new
+      config = Configuration.load
       yield config if block_given?
 
-      locate(config).each do |model|
-        puts "Generating fixtures for #{model}..."
-
-        call(
-          model,
-          excluded_attributes: exclusions_for(model: model, config: config),
-        )
+      config.models.each do |model|
+        puts "Generating fixtures for #{model.name}..."
+        model.to_fixture
       end
     end
 
@@ -25,20 +20,6 @@ module Fixturator
 
     def to_proc
       method(:call)
-    end
-
-    private
-
-    def locate(config)
-      Locator.new(
-        except: config.excluded_models,
-        only: config.included_models,
-      ).call
-    end
-
-    def exclusions_for(model:, config:)
-      exclusions = config.model_level_excluded_attributes[model.to_s]
-      exclusions + config.excluded_attributes
     end
   end
 end
