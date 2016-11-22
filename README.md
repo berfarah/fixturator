@@ -16,26 +16,42 @@ but you can also call it yourself with a model.
 
 #### Rake task
 
-This gem ships with a rake task that has a few flags you can use with it
+This gem ships with a rake task that can read a file located at
+`config/fixturator.yml`
 
 ```sh
 bin/rake db:fixtures:generate
-
-# If you want to narrow the scope of the task to just a few models
-ONLY=User,Post bin/rake db:fixtures:generate
-
-# If you have models that you don't want to generate fixtures for
-SKIP=DelayedJob,SecretStuff bin/rake db:fixtures:generate
-
-# If there are attributes you would like to keep out of the fixtures
-EXCLUDE_ATTRS=password,sensitive_information bin/rake db:fixtures:generate
 ```
+
+Here's an example configuration:
+
+```yml
+excluded_models:
+- Secret
+- DelayedJob
+
+included_models:
+- User
+
+excluded_attributes:
+- secret_attribute
+- ssn
+
+model_level_excluded_attributes:
+  User:
+  - middle_name
+  - drivers_license
+```
+
 
 #### Ruby interface
 
 ```rb
-Fixturator.call(User, exclude_attributes: ["created_at"])
+Fixturator.generate!
+# Uses the config/fixturator.yml
+# generates a bunch of fixtures in your configured fixture directory
 
+Fixturator.call(User, exclude_attributes: ["created_at"])
 # generates a User fixture at your configured fixture directory
 # by default it's at test/fixtures/users.yml
 ```

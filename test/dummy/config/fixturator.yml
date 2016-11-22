@@ -1,0 +1,15 @@
+excluded_models:
+- Secret
+- DelayedJob
+
+included_models:
+- User
+
+excluded_attributes:
+- secret_attribute
+- ssn
+
+model_level_excluded_attributes:
+  User:
+  - middle_name
+  - drivers_license
