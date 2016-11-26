@@ -1,4 +1,4 @@
-$:.push File.expand_path("../lib", __FILE__)
+$LOAD_PATH.push File.expand_path("../lib", __FILE__)
 
 # Maintain your gem's version:
 require "fixturator/version"
@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
-  s.add_dependency "rails", "~> 5.0.0", ">= 5.0.0.1"
+  s.add_dependency "railties", ">= 4.1.0", "< 5.1"
 
   s.add_development_dependency "mocha", "1.1"
   s.add_development_dependency "pry", "~> 0.10.3"
