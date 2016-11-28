@@ -1,13 +1,15 @@
 # Fixturator
 
 Fixturator is a Rails plugin that generates fixtures from your ActiveRecord
-models. By default, it looks for anything that has subclassed
-ActiveRecord::Base
+models. It requires you to whitelist models in your `config/fixturator.yml`
 
 **QUIRKS**
 
 I've made `created_at` and `updated_at` always output the same time. The reason
 this is part of the gem is that git diffs get really messy otherwise.
+
+You can also exclude timestamps entirely by using the `exclude_timestamps`
+setting
 
 ## Usage
 
@@ -16,26 +18,35 @@ but you can also call it yourself with a model.
 
 #### Rake task
 
-This gem ships with a rake task that has a few flags you can use with it
+This gem ships with a rake task that can read a file located at
+`config/fixturator.yml`
 
 ```sh
 bin/rake db:fixtures:generate
-
-# If you want to narrow the scope of the task to just a few models
-ONLY=User,Post bin/rake db:fixtures:generate
-
-# If you have models that you don't want to generate fixtures for
-SKIP=DelayedJob,SecretStuff bin/rake db:fixtures:generate
-
-# If there are attributes you would like to keep out of the fixtures
-EXCLUDE_ATTRS=password,sensitive_information bin/rake db:fixtures:generate
 ```
+
+Here's an example configuration:
+
+```yml
+exclude_timestamps: false
+
+models:
+  - name: Driver
+  - name: User
+    exclude:
+      - secret_attribute
+      - ssn
+```
+
 
 #### Ruby interface
 
 ```rb
-Fixturator.call(User, exclude_attributes: ["created_at"])
+Fixturator.generate!
+# Uses the config/fixturator.yml
+# generates a bunch of fixtures in your configured fixture directory
 
+Fixturator.call(User, exclude_attributes: ["created_at"])
 # generates a User fixture at your configured fixture directory
 # by default it's at test/fixtures/users.yml
 ```

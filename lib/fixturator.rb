@@ -1,18 +1,25 @@
 require "fixturator/railtie"
-require "fixturator/locator"
+require "fixturator/configuration"
 require "fixturator/generator"
 
 module Fixturator
-  def self.generate!(except: [], only: [], excluded_attributes: [])
-    models = Locator.new(except: except, only: only).call
+  class << self
+    def generate!
+      config = Configuration.load
+      yield config if block_given?
 
-    models.each do |model|
-      puts "Generating fixtures for #{model}..."
-      call(model, excluded_attributes: excluded_attributes)
+      config.models.each do |model|
+        puts "Generating fixtures for #{model.name}..."
+        model.to_fixture
+      end
     end
-  end
 
-  def self.call(*args)
-    Generator.new(*args).call
+    def call(*args)
+      Generator.new(*args).call
+    end
+
+    def to_proc
+      method(:call)
+    end
   end
 end

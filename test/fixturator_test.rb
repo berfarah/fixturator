@@ -3,8 +3,16 @@ require "rake"
 require "minitest/spec"
 require "fileutils"
 
-class FixturatorGenerateFixturesTest < ActiveSupport::TestCase
+class FixturatorTest < ActiveSupport::TestCase
   extend Minitest::Spec::DSL
+
+  describe ".generate!" do
+    it "succeeds" do
+      hide_stdout do
+        Fixturator.generate!
+      end
+    end
+  end
 
   describe "rake task" do
     before do

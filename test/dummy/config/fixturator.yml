@@ -1,0 +1,8 @@
+exclude_timestamps: false
+
+models:
+  - name: Driver
+  - name: User
+    exclude:
+      - secret_attribute
+      - ssn
