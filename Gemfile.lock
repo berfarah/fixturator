@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fixturator (0.2.0)
+    fixturator (1.0.0)
       railties (>= 4.1.0, < 5.1)
 
 GEM
