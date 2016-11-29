@@ -9,13 +9,12 @@ require "mocha/mini_test"
 # Filter out Minitest backtrace while allowing backtrace from other libraries
 # to be shown.
 Minitest.backtrace_filter = Minitest::BacktraceFilter.new
-
-Rails::TestUnitReporter.executable = 'bin/test'
+ActiveSupport::TestCase.test_order = :random
 
 # Load fixtures from the engine
 if ActiveSupport::TestCase.respond_to?(:fixture_path=)
   ActiveSupport::TestCase.fixture_path = File.expand_path("../fixtures", __FILE__)
   ActionDispatch::IntegrationTest.fixture_path = ActiveSupport::TestCase.fixture_path
-  ActiveSupport::TestCase.file_fixture_path = ActiveSupport::TestCase.fixture_path + "/files"
+  ActiveSupport::TestCase.file_fixture_path = ActiveSupport::TestCase.fixture_path + "/files" if ActiveSupport::TestCase.respond_to?(:file_fixture_path=)
   ActiveSupport::TestCase.fixtures :all
 end

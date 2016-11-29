@@ -6,6 +6,10 @@ require "fileutils"
 class FixturatorTest < ActiveSupport::TestCase
   extend Minitest::Spec::DSL
 
+  before do
+    Dummy::Application.load_tasks
+  end
+
   describe ".generate!" do
     it "succeeds" do
       hide_stdout do
@@ -15,11 +19,6 @@ class FixturatorTest < ActiveSupport::TestCase
   end
 
   describe "rake task" do
-    before do
-      Dummy::Application.load_tasks
-      FileUtils.mkdir_p(Rails.root.join("test", "fixtures"))
-    end
-
     it "succeeds" do
       hide_stdout do
         assert_nothing_raised do
