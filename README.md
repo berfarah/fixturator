@@ -54,6 +54,12 @@ Fixturator.call(User, exclude_attributes: ["created_at"])
 # by default it's at test/fixtures/users.yml
 ```
 
+#### Locating all existing models
+
+If you want to create fixtures for all of your models, you can check out [this
+issue](https://github.com/coverhound/fixturator/issues/8) on more details of how
+to get a complete list. You can use a locator in conjunction with
+`Fixturator.call(model)` to do so.
 
 
 ## Installation
