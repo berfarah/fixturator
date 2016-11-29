@@ -25,14 +25,17 @@ This gem ships with a rake task that can read a file located at
 bin/rake db:fixtures:generate
 ```
 
-Here's an example configuration:
+Here's an example configuration with all valid attributes:
 
 ```yml
+# Excludes created_at and updated_at on all models
 exclude_timestamps: false
 
+# The models for which fixtures are generated
 models:
   - name: Driver
   - name: User
+    # excluded attributes for that model
     exclude:
       - secret_attribute
       - ssn
