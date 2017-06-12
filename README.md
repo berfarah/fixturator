@@ -49,7 +49,7 @@ Fixturator.generate!
 # Uses the config/fixturator.yml
 # generates a bunch of fixtures in your configured fixture directory
 
-Fixturator.call(User, exclude_attributes: ["created_at"])
+Fixturator.call(User, excluded_attributes: ["created_at"])
 # generates a User fixture at your configured fixture directory
 # by default it's at test/fixtures/users.yml
 ```
